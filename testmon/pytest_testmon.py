@@ -369,12 +369,6 @@ def get_failing(all_nodes):
     return failing_files, failing_nodes
 
 
-def sort_items_by_duration(items, avg_durations):
-    items.sort(key=lambda item: avg_durations[item.nodeid])
-    items.sort(key=lambda item: avg_durations[get_node_class_name(item.nodeid)])
-    items.sort(key=lambda item: avg_durations[get_node_module_name(item.nodeid)])
-
-
 class TestmonSelect:
     def __init__(self, config, testmon_data):
         self.testmon_data = testmon_data
@@ -405,8 +399,6 @@ class TestmonSelect:
             else:
                 selected.append(item)
 
-        sort_items_by_duration(selected, self.testmon_data.avg_durations)
-
         if self.config.testmon_config[2]:
             items[:] = selected
             session.config.hook.pytest_deselected(
@@ -415,7 +407,6 @@ class TestmonSelect:
                 )
             )
         else:
-            sort_items_by_duration(deselected, self.testmon_data.avg_durations)
             items[:] = selected + deselected
 
     @pytest.hookimpl(trylast=True)

@@ -20,9 +20,13 @@ affected tests](https://testmon.org/determining-affected-tests.html)
 To learn more about different options you can use with testmon, please
 head to [testmon.org](https://testmon.org)
 
-## Call for opensource projects: try testmon in CI with no effort or risk.
+All command line options
 
-We would like to run testmon within your project, collect data and improve!
-We'll prepare the PR for you and set everything up so that no tests are deselected initially.
-You can start using the full functionality whenever the reliability and time savings seem right!
-Please <a href="https://testmon.org/ci.html">get in touch</a> and we'll contact you shortly.
+```
+--testmon	(select and collect) select only tests affected by recent changes and update the testmon database. In some circumstances different options are also forced. See below.
+--testmon-noselect	Don't deselect, execute all tests picked up by pytest and create/update respective records in .testmondata. Forced if you use --testmon with some test selector (-k, -m, --last-failed, test_file.py::test_x, etc.)
+--testmon-nocollect	Don't track, just deselect based on existing database and changes. This is forced also when you use --testmon with debugger or Coverage.py.
+--testmon-forceselect	Selects only tests which both reach changed code and satisfy pytest selectors.
+--no-testmon	Turn off (even if activated from config by default).
+--testmon-env=<STRING>	This allows you to have separate coverage data within one .testmondata file, e.g. when using the same source code serving different endpoints or django settings.
+```
